@@ -20,3 +20,5 @@ class TryRegisterEvent extends MainblocEvent {
   final userModel userInfo;
   TryRegisterEvent(this.userInfo);
 }
+
+class ErrorCatchEvent extends MainblocEvent {}

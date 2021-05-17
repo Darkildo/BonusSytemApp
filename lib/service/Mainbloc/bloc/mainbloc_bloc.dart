@@ -19,27 +19,23 @@ class MainblocBloc extends Bloc<MainblocEvent, MainblocState> {
   ) async* {
     if (event is AppStartEvent) {
       storage = DataStorage();
-      if (storage != null) {
-        await storage!.activateStorage();
-        bool authorise = storage!.localStorageAuthorise();
-        if (authorise) {
-          _currentPage = pages.profile;
-          yield AppLoadedState(_currentPage, storage!.loadUserInfo());
-        } else {
-          _currentPage = pages.login;
-          yield AppLoadedState(_currentPage, null);
-        }
+
+      await storage!.activateStorage();
+      bool authorise = storage!.localStorageAuthorise();
+      if (authorise) {
+        _currentPage = pages.profile;
+        yield AppLoadedState(_currentPage, storage!.loadUserInfo(), false);
       } else {
-        yield AppLoadedState(_currentPage, null);
-        // ignore: avoid_print
-        print('storage is null(((');
+        _currentPage = pages.login;
+        yield AppLoadedState(_currentPage, null, false);
       }
     }
 
     if (event is ChangePageEvent) {
       _currentPage = event.newPage;
       if (state is AppLoadedState) {
-        yield AppLoadedState(_currentPage, (state as AppLoadedState).userInfo);
+        yield AppLoadedState(
+            _currentPage, (state as AppLoadedState).userInfo, false);
       } else {
         yield state;
       }
@@ -51,14 +47,14 @@ class MainblocBloc extends Bloc<MainblocEvent, MainblocState> {
           event.password == user.password &&
           user.login != 'none') {
         _currentPage = pages.profile;
-        yield AppLoadedState(_currentPage, user);
+        yield AppLoadedState(_currentPage, user, true);
       }
     }
 
     if (event is TryRegisterEvent) {
       await storage!.saveAuthorisedUserInfo(event.userInfo);
       _currentPage = pages.profile;
-      yield AppLoadedState(_currentPage, event.userInfo);
+      yield AppLoadedState(_currentPage, event.userInfo, true);
     }
   }
 }

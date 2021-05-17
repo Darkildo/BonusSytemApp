@@ -59,7 +59,7 @@ class DataStorage {
     await box.put('lastName', user.lastName);
     await box.put('mobileNumber', user.mobileNumber);
     await box.put('thirdName', user.thirdName);
-
+    await setValuelocalStorageAuthorise(true);
     return;
   }
 

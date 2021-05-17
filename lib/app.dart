@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loyal_app/enum/page_list.dart';
+import 'package:loyal_app/pages/ProfilePage/profile_page.dart';
+import 'package:loyal_app/pages/errorPage/error_page.dart';
 import 'package:loyal_app/pages/loginPage/login_page.dart';
 import 'package:loyal_app/pages/registerPage/register_page.dart';
 import 'package:loyal_app/service/Mainbloc/bloc/mainbloc_bloc.dart';
@@ -22,15 +24,15 @@ Widget getpage(MainblocState state) {
       case pages.login:
         return loginPage();
       case pages.profile:
-        return Text('profilePage');
+        return ProfilePage();
       case pages.register:
         return registerPage();
 
       default:
-        return Text('default');
+        return const ErrorPage('undefined page type in state');
     }
   }
-  return Text('someError');
+  return const Text('unsupported state for switch');
 }
 
 class AppState extends State<App> {
