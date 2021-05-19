@@ -34,8 +34,8 @@ class MainblocBloc extends Bloc<MainblocEvent, MainblocState> {
     if (event is ChangePageEvent) {
       _currentPage = event.newPage;
       if (state is AppLoadedState) {
-        yield AppLoadedState(
-            _currentPage, (state as AppLoadedState).userInfo, false);
+        yield AppLoadedState(_currentPage, (state as AppLoadedState).userInfo,
+            (state as AppLoadedState).floatMenuEnabled);
       } else {
         yield state;
       }

@@ -22,7 +22,11 @@ class ButtonBarExample extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(10.0),
         ),
-        onPressed: action != null ? () => action : null,
+        onPressed: action != null
+            ? () {
+                action!();
+              }
+            : null,
         child: Text(
           text,
           style: const TextStyle(color: Colors.white),

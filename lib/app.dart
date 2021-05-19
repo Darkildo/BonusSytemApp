@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loyal_app/enum/page_list.dart';
 import 'package:loyal_app/pages/ProfilePage/profile_page.dart';
 import 'package:loyal_app/pages/errorPage/error_page.dart';
+import 'package:loyal_app/pages/kabinetPage/kabinet_page.dart';
 import 'package:loyal_app/pages/loginPage/login_page.dart';
 import 'package:loyal_app/pages/registerPage/register_page.dart';
 import 'package:loyal_app/service/Mainbloc/bloc/mainbloc_bloc.dart';
@@ -29,7 +30,8 @@ Widget getpage(MainblocState state) {
         return ProfilePage();
       case pages.register:
         return registerPage();
-
+      case pages.kabinet:
+        return KabinetPage();
       default:
         return const ErrorPage('undefined page type in state');
     }
@@ -41,11 +43,11 @@ class AppState extends State<App> {
   MainblocBloc? bloc;
 
   void kabinetButton() {
-    context.read<MainblocBloc>().add(ChangePageEvent(pages.kabinet));
+    bloc!.add(ChangePageEvent(pages.kabinet));
   }
 
   void profilebutton() {
-    context.read<MainblocBloc>().add(ChangePageEvent(pages.profile));
+    bloc!.add(ChangePageEvent(pages.profile));
   }
 
   bool isProPageActive(pages page) {
@@ -63,6 +65,18 @@ class AppState extends State<App> {
     return false;
   }
 
+  void showQRImage() {
+    showDialog(
+        context: context,
+        builder: (_) => SimpleDialog(
+              title: const Text('QR'),
+              children: [
+                Image.asset('qrcode.jpg'),
+                const Text('This is my content')
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     bloc = context.read<MainblocBloc>();
@@ -76,7 +90,9 @@ class AppState extends State<App> {
           floatingActionButton: actionButtonActive()
               ? FloatingActionButton(
                   child: const Icon(Icons.qr_code),
-                  onPressed: () {},
+                  onPressed: () {
+                    showQRImage();
+                  },
                 )
               : null,
           bottomNavigationBar: actionButtonActive()
