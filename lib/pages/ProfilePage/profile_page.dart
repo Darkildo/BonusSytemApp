@@ -37,18 +37,20 @@ class _ProfilePageState extends State<ProfilePage> {
                   vertical: MediaQuery.of(context).size.height * 0.041),
               child: Text(
                 user != null ? user!.firstName : 'invalid name',
-                style: TextStyle(fontSize: 24, fontStyle: FontStyle.italic),
+                style:
+                    const TextStyle(fontSize: 24, fontStyle: FontStyle.italic),
               )),
-          Container(
-            child: Text(
-              'Epal',
-              style: TextStyle(fontSize: 26),
-            ),
+
+          const Text(
+            'Epal',
+            style: TextStyle(fontSize: 26),
           ),
 
           Container(
-            margin:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.07),
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.07,
+                left: MediaQuery.of(context).size.width * 0.04),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

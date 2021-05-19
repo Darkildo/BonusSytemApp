@@ -6,21 +6,23 @@ import 'package:loyal_app/pages/errorPage/error_page.dart';
 import 'package:loyal_app/pages/loginPage/login_page.dart';
 import 'package:loyal_app/pages/registerPage/register_page.dart';
 import 'package:loyal_app/service/Mainbloc/bloc/mainbloc_bloc.dart';
+import 'package:loyal_app/widgets/button_bar.dart';
 
+// ignore: use_key_in_widget_constructors
 class App extends StatefulWidget {
   @override
   AppState createState() => AppState();
 }
 
 Widget getpage(MainblocState state) {
-  if (state is AppLoadingState)
-    return Center(
+  if (state is AppLoadingState) {
+    return const Center(
       child: Text('App is loading'),
     );
+  }
 
   if (state is AppLoadedState) {
-    AppLoadedState currentState = (state as AppLoadedState);
-    switch ((state as AppLoadedState).currentPage) {
+    switch ((state).currentPage) {
       case pages.login:
         return loginPage();
       case pages.profile:
@@ -36,11 +38,60 @@ Widget getpage(MainblocState state) {
 }
 
 class AppState extends State<App> {
+  MainblocBloc? bloc;
+
+  void kabinetButton() {
+    context.read<MainblocBloc>().add(ChangePageEvent(pages.kabinet));
+  }
+
+  void profilebutton() {
+    context.read<MainblocBloc>().add(ChangePageEvent(pages.profile));
+  }
+
+  bool isProPageActive(pages page) {
+    MainblocState currentState = bloc!.state;
+    if (currentState is AppLoadedState) {
+      return currentState.currentPage == page;
+    }
+    return false;
+  }
+
+  bool actionButtonActive() {
+    if (bloc!.state is AppLoadedState) {
+      return (bloc!.state as AppLoadedState).floatMenuEnabled;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
+    bloc = context.read<MainblocBloc>();
     return BlocBuilder<MainblocBloc, MainblocState>(
+      bloc: context.read<MainblocBloc>(),
       builder: (context, state) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: actionButtonActive()
+              ? FloatingActionButton(
+                  child: const Icon(Icons.qr_code),
+                  onPressed: () {},
+                )
+              : null,
+          bottomNavigationBar: actionButtonActive()
+              ? BottomAppBar(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ButtonBarExample('Кабинет', kabinetButton,
+                          isProPageActive(pages.kabinet)),
+                      ButtonBarExample('Профиль', profilebutton,
+                          isProPageActive(pages.profile)),
+                    ],
+                  ),
+                )
+              : null,
           body: Container(
             child: getpage(context.read<MainblocBloc>().state),
           ),

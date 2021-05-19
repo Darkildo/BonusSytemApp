@@ -19,12 +19,12 @@ class MainblocBloc extends Bloc<MainblocEvent, MainblocState> {
   ) async* {
     if (event is AppStartEvent) {
       storage = DataStorage();
-
+      if (storage == null) return;
       await storage!.activateStorage();
       bool authorise = storage!.localStorageAuthorise();
       if (authorise) {
         _currentPage = pages.profile;
-        yield AppLoadedState(_currentPage, storage!.loadUserInfo(), false);
+        yield AppLoadedState(_currentPage, storage!.loadUserInfo(), true);
       } else {
         _currentPage = pages.login;
         yield AppLoadedState(_currentPage, null, false);
