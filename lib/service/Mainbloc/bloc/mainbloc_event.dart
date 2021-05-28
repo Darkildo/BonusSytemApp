@@ -22,3 +22,9 @@ class TryRegisterEvent extends MainblocEvent {
 }
 
 class ErrorCatchEvent extends MainblocEvent {}
+
+class UpdateUserInfoEvent extends MainblocEvent {
+  final userInfoEnum changeParam;
+  final String info;
+  UpdateUserInfoEvent(this.info, this.changeParam);
+}

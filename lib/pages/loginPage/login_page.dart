@@ -3,16 +3,17 @@ import 'package:loyal_app/enum/page_list.dart';
 import 'package:loyal_app/service/Mainbloc/bloc/mainbloc_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class loginPage extends StatefulWidget {
-  loginPage() : super();
+// ignore: use_key_in_widget_constructors
+class LoginPage extends StatefulWidget {
   String userLogin = '';
   String userPassword = '';
   bool buttonActive = false;
   @override
-  _loginPageState createState() => _loginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _loginPageState extends State<loginPage> {
+// ignore: camel_case_types
+class _LoginPageState extends State<LoginPage> {
   void buttonStateUpdate() {
     setState(() {
       widget.buttonActive =
@@ -31,7 +32,7 @@ class _loginPageState extends State<loginPage> {
           Container(
             padding: EdgeInsets.symmetric(
                 vertical: MediaQuery.of(context).size.height * 0.05),
-            child: Text(
+            child: const Text(
               'Loyalty.HD',
               style: TextStyle(
                   fontFamily: 'Roboto',
@@ -63,7 +64,7 @@ class _loginPageState extends State<loginPage> {
                       vertical: MediaQuery.of(context).size.height * 0.01,
                       horizontal: MediaQuery.of(context).size.width * 0.06,
                     ),
-                    child: Text(
+                    child: const Text(
                       'Вход',
                       style: TextStyle(
                           fontFamily: 'Roboto',
@@ -89,7 +90,7 @@ class _loginPageState extends State<loginPage> {
                       vertical: MediaQuery.of(context).size.height * 0.01,
                       horizontal: MediaQuery.of(context).size.width * 0.02,
                     ),
-                    child: Text(
+                    child: const Text(
                       'Зарегистрироваться',
                       style: TextStyle(
                           fontFamily: 'Roboto',

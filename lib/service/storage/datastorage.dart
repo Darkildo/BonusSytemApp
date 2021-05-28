@@ -36,12 +36,12 @@ class DataStorage {
   //* возвращает значения первичного запуска приложения
   userModel loadUserInfo() {
     return userModel(
-      box.get('firstName') != null ? box.get('firstName') : 'none',
-      box.get('lastName') != null ? box.get('lastName') : 'none',
-      box.get('login') != null ? box.get('login') : 'none',
-      box.get('mobileNumber') != null ? box.get('mobileNumber') : 'none',
-      box.get('thirdName') != null ? box.get('thirdName') : 'none',
-      box.get('password') != null ? box.get('password') : 'none',
+      box.get('firstName') ?? 'none',
+      box.get('lastName') ?? 'none',
+      box.get('login') ?? 'none',
+      box.get('mobileNumber') ?? 'none',
+      box.get('thirdName') ?? 'none',
+      box.get('password') ?? 'none',
     );
   }
 
@@ -65,5 +65,14 @@ class DataStorage {
 
   Future<void> setValuelocalStorageAuthorise(bool val) async {
     return await box.put('Authorised', val);
+  }
+
+  Future<void> updateUserInfo(userModel user) async {
+    if (user.firstName.isNotEmpty) await box.put('firstName', user.firstName);
+    if (user.lastName.isNotEmpty) await box.put('lastName', user.lastName);
+    if (user.login.isNotEmpty) await box.put('login', user.login);
+    if (user.mobileNumber.isNotEmpty)
+      await box.put('mobileNumber', user.mobileNumber);
+    if (user.thirdName.isNotEmpty) await box.put('thirdName', user.thirdName);
   }
 }

@@ -31,7 +31,7 @@ class _registerPageState extends State<registerPage> {
             Container(
               padding: EdgeInsets.symmetric(
                   vertical: MediaQuery.of(context).size.height * 0.05),
-              child: Text(
+              child: const Text(
                 'Loyalty.HD',
                 style: TextStyle(
                     fontFamily: 'Roboto',

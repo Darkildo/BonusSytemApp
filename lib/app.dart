@@ -25,7 +25,7 @@ Widget getpage(MainblocState state) {
   if (state is AppLoadedState) {
     switch ((state).currentPage) {
       case pages.login:
-        return loginPage();
+        return LoginPage();
       case pages.profile:
         return ProfilePage();
       case pages.register:
@@ -71,8 +71,10 @@ class AppState extends State<App> {
         builder: (_) => SimpleDialog(
               title: const Text('QR'),
               children: [
-                Image.asset('qrcode.jpg'),
-                const Text('This is my content')
+                Image.asset('qrcode.jpg',
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    height: MediaQuery.of(context).size.height * 0.35),
+                const Center(child: Text('This is my content'))
               ],
             ));
   }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:loyal_app/enum/page_list.dart';
+import 'package:loyal_app/enum/user_info.dart';
 import 'package:loyal_app/models/user_model.dart';
 import 'package:loyal_app/service/storage/datastorage.dart';
 import 'package:meta/meta.dart';
@@ -55,6 +56,30 @@ class MainblocBloc extends Bloc<MainblocEvent, MainblocState> {
       await storage!.saveAuthorisedUserInfo(event.userInfo);
       _currentPage = pages.profile;
       yield AppLoadedState(_currentPage, event.userInfo, true);
+    }
+    if (event is UpdateUserInfoEvent) {
+      userModel userinfo = userModel.withoutdata();
+      switch (event.changeParam) {
+        case userInfoEnum.firstName:
+          userinfo.firstName = event.info;
+          break;
+        case userInfoEnum.lastName:
+          userinfo.lastName = event.info;
+          break;
+        case userInfoEnum.thirdName:
+          userinfo.thirdName = event.info;
+          break;
+        case userInfoEnum.login:
+          userinfo.login = event.info;
+          break;
+        case userInfoEnum.mobileNumber:
+          userinfo.mobileNumber = event.info;
+          break;
+        default:
+          break;
+      }
+      await storage!.updateUserInfo(userinfo);
+      yield AppLoadedState(_currentPage, storage!.loadUserInfo(), true);
     }
   }
 }
