@@ -110,9 +110,7 @@ class AppState extends State<App> {
                   ),
                 )
               : null,
-          body: Container(
-            child: getpage(context.read<MainblocBloc>().state),
-          ),
+          body: getpage(context.read<MainblocBloc>().state),
         );
       },
     );
