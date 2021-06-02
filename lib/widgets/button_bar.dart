@@ -16,7 +16,6 @@ class ButtonBarExample extends StatelessWidget {
           primary: (buttonActive == null ? true : buttonActive!)
               ? Colors.blue
               : Colors.blueGrey.shade500,
-          elevation: 30,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14.0),
           ),

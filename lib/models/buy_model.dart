@@ -1,3 +1,11 @@
+import 'dart:math';
+
+const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+Random _rnd = Random();
+
+String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+    length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+
 class BuyModel {
   late DateTime buyTime;
   late String shopName;
@@ -22,6 +30,22 @@ class BuyModel {
     localProgram = '';
     bonusPay = 0;
     finalCostWithBonus = 0;
+    bonusRemain = 0;
+  }
+  BuyModel.randomData() {
+    buyTime = DateTime(
+      _rnd.nextInt(2030),
+      _rnd.nextInt(60),
+      _rnd.nextInt(60),
+      _rnd.nextInt(60),
+      _rnd.nextInt(60),
+      _rnd.nextInt(60),
+    );
+    shopName = getRandomString(_rnd.nextInt(19));
+    shopCost = _rnd.nextInt(6000);
+    localProgram = getRandomString(_rnd.nextInt(19));
+    bonusPay = _rnd.nextInt((shopCost * 0.8).toInt());
+    finalCostWithBonus = shopCost - bonusPay;
     bonusRemain = 0;
   }
 }

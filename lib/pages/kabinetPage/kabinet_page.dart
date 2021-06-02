@@ -12,19 +12,114 @@ class KabinetPage extends StatefulWidget {
 
 class _KabinetPageState extends State<KabinetPage> {
   userModel? user;
+
   List<BuyModel> shopList = [
-    BuyModel.withoutData(),
-    BuyModel.withoutData(),
-    BuyModel.withoutData(),
-    BuyModel.withoutData(),
-    BuyModel.withoutData(),
-    BuyModel.withoutData(),
-    BuyModel.withoutData(),
-    BuyModel.withoutData(),
-    BuyModel.withoutData(),
-    BuyModel.withoutData(),
-    BuyModel.withoutData(),
+    BuyModel.randomData(),
+    BuyModel.randomData(),
+    BuyModel.randomData(),
+    BuyModel.randomData(),
+    BuyModel.randomData(),
+    BuyModel.randomData(),
+    BuyModel.randomData(),
+    BuyModel.randomData(),
+    BuyModel.randomData(),
+    BuyModel.randomData(),
+    BuyModel.randomData(),
   ];
+  void getMoreInfo(BuyModel model) {
+    showDialog(
+      context: context,
+      builder: (_) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40),
+        ),
+        elevation: 0,
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Icon(Icons.task_alt_outlined),
+                  const Text('Shop name:'),
+                  const Spacer(),
+                  Text(model.shopName),
+                  const Spacer(),
+                ],
+              ),
+              Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * 0.009)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Icon(Icons.card_travel),
+                  const Text('bonus Program:'),
+                  const Spacer(),
+                  Text(model.localProgram),
+                  const Spacer(),
+                ],
+              ),
+              Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * 0.009)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Icon(Icons.money),
+                  const Text('Shop cost:'),
+                  const Spacer(),
+                  Text(model.shopCost.toString()),
+                  const Spacer(),
+                ],
+              ),
+              Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * 0.009)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Icon(Icons.money_off_csred),
+                  const Text('Bonus pay:'),
+                  const Spacer(),
+                  Text(model.bonusPay.toString()),
+                  const Spacer(),
+                ],
+              ),
+              Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * 0.009)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Icon(Icons.attach_money_sharp),
+                  const Text('Bonus remain:'),
+                  const Spacer(),
+                  Text(model.bonusRemain.toString()),
+                  const Spacer(),
+                ],
+              ),
+              Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * 0.009)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Icon(Icons.money),
+                  const Text('Final cost:'),
+                  const Spacer(),
+                  Text(model.finalCostWithBonus.toString()),
+                  const Spacer(),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +140,9 @@ class _KabinetPageState extends State<KabinetPage> {
         children: [
           // ignore: prefer_const_constructors
           Flexible(
-              child: Text(
+              child: const Text(
             'Профиль',
-            style: const TextStyle(fontSize: 28),
+            style: TextStyle(fontSize: 28),
           )),
           Flexible(
               child: Container(
@@ -72,7 +167,8 @@ class _KabinetPageState extends State<KabinetPage> {
                   alignment: Alignment.centerLeft,
                   margin: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.07,
-                      left: MediaQuery.of(context).size.width * 0.04),
+                      left: MediaQuery.of(context).size.width * 0.04,
+                      right: MediaQuery.of(context).size.width * 0.04),
                   child: shopList.isEmpty
                       ? const Text('Здесь скоро появятся ваши покупки')
                       : NotificationListener<OverscrollIndicatorNotification>(
@@ -87,9 +183,9 @@ class _KabinetPageState extends State<KabinetPage> {
                               return Padding(
                                 padding: const EdgeInsets.all(1.0),
                                 child: ButtonBarExample(
-                                    shopList[index].buyTime.toIso8601String(),
-                                    () {},
-                                    null),
+                                    shopList[index].buyTime.toString(), () {
+                                  getMoreInfo(shopList[index]);
+                                }, true),
                               );
                             },
                           ))))
